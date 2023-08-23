@@ -2,6 +2,7 @@ package com.codewithnishad.consultantwebsite.model;
 
 public class User {
 
+	private int userId;
 	private String firstName;
 	private String lastName;
 	private int age;
@@ -15,9 +16,10 @@ public class User {
 
 	}
 
-	public User(String firstName, String lastName, int age, String gender, String role, String email, String password,
+	public User(int userId, String firstName, String lastName, int age, String gender, String role, String email, String password,
 			String phoneNumber) {
 
+		this.userId = userId;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.age = age;
@@ -26,6 +28,14 @@ public class User {
 		this.email = email;
 		this.password = password;
 		this.phoneNumber = phoneNumber;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
 	public String getFirstName() {
@@ -93,4 +103,3 @@ public class User {
 	}
 
 }
-
