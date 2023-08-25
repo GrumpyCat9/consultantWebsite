@@ -19,9 +19,9 @@ public class UserManagerImpl implements UserManager {
 
 	private Connection getConnection() throws ClassNotFoundException, SQLException {
 
-		Class.forName("com.mysql.jdbc.Drive.class");
+		Class.forName("com.mysql.jdbc.Driver");
 
-		String url = "jdbc:mysql://localhost:3306/?user=root";
+		String url = "jdbc:mysql://127.0.0.1:3306/job_consultant_db";
 		String userName = "root";
 		String password = "dXsAIgMek0aEFdt";
 

@@ -1,5 +1,6 @@
 package com.codewithnishad.consultantwebsite.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import com.codewithnishad.consultantwebsite.dao.UserManager;
@@ -25,23 +26,23 @@ public class UserService {
 		return new UserManagerImpl();
 	}
 
-	public boolean addUser(User user) {
+	public boolean addUser(User user) throws ClassNotFoundException, SQLException {
 		return getUserManager().addUser(user);
 	}
 
-	public boolean editUser(User user) {
+	public boolean editUser(User user) throws ClassNotFoundException, SQLException {
 		return getUserManager().editUser(user);
 	}
 
-	public boolean deleteUser(int userId) {
+	public boolean deleteUser(int userId) throws ClassNotFoundException, SQLException {
 		return getUserManager().deleteUser(userId);
 	}
 
-	public User fetchSingleUser(int userId) {
+	public User fetchSingleUser(int userId) throws ClassNotFoundException, SQLException {
 		return getUserManager().fetchSingleUser(userId);
 	}
 
-	public List<User> fetchAllUsers() {
+	public List<User> fetchAllUsers() throws ClassNotFoundException, SQLException {
 		return getUserManager().fetchAllUsers();
 	}
 }
