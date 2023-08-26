@@ -181,4 +181,45 @@ public class UserManagerImpl implements UserManager {
 
 	}
 
+	@Override
+	public User loginUser(String email, String password) throws SQLException, ClassNotFoundException {
+		Connection connection = getConnection();
+
+		String query = "SELECT * FROM users WHERE email = ? AND password = ?";
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		User user = null;
+
+		try {
+			ps = connection.prepareStatement(query);
+			ps.setString(1, email);
+			ps.setString(2, password);
+			rs = ps.executeQuery();
+
+			if (rs.next()) {
+				user = new User();
+				user.setUserId(rs.getInt("userId"));
+				user.setFirstName(rs.getString("firstName"));
+				user.setLastName(rs.getString("lastName"));
+				user.setAge(rs.getInt("age"));
+				user.setGender(rs.getString("gender"));
+				user.setRole(rs.getString("role"));
+				user.setEmail(rs.getString("email"));
+				user.setPassword(rs.getString("password"));
+				user.setPhoneNumber(rs.getString("phoneNumber"));
+			}
+		} finally {
+			if (rs != null) {
+				rs.close();
+			}
+			if (ps != null) {
+				ps.close();
+			}
+			connection.close();
+		}
+
+		return user;
+	}
+
 }

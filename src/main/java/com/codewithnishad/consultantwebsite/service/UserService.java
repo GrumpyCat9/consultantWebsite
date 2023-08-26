@@ -30,6 +30,10 @@ public class UserService {
 		return getUserManager().addUser(user);
 	}
 
+	public User loginUser(String email, String password) throws ClassNotFoundException, SQLException {
+		return getUserManager().loginUser(email, password);
+	}
+
 	public boolean editUser(User user) throws ClassNotFoundException, SQLException {
 		return getUserManager().editUser(user);
 	}

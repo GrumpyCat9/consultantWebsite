@@ -9,6 +9,8 @@ public interface UserManager {
 	
 	public boolean addUser(User user) throws SQLException, ClassNotFoundException;
 	
+	public User loginUser(String email, String password) throws SQLException, ClassNotFoundException;
+	
 	public boolean editUser(User user) throws SQLException, ClassNotFoundException;
 	
 	public boolean deleteUser(int userId) throws SQLException, ClassNotFoundException;

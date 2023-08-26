@@ -24,8 +24,12 @@ public class UserController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		RequestDispatcher rd = request.getRequestDispatcher("user-registration.jsp");
-		rd.forward(request, response);
+		String actionType = request.getParameter("actionType");
+
+		if (actionType.equals("login")) {
+			loginUser(request, response);
+		}
+
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -39,6 +43,8 @@ public class UserController extends HttpServlet {
 			editUser(request, response);
 		} else if (actionType.equals("delete")) {
 			deleteUser(request, response);
+		} else if (actionType.equals("login")) {
+			loginUser(request, response);
 		}
 	}
 
@@ -59,6 +65,9 @@ public class UserController extends HttpServlet {
 		try {
 			if (getUserService().addUser(user)) {
 				message = "Registered";
+
+				RequestDispatcher rd = request.getRequestDispatcher("user-login.jsp");
+				rd.forward(request, response);
 			} else {
 				message = "Failed";
 			}
@@ -71,8 +80,37 @@ public class UserController extends HttpServlet {
 		}
 
 		request.setAttribute("feedbackMessage", message);
+
+	}
+
+	private void loginUser(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		String email = request.getParameter("email");
+		String password = request.getParameter("password");
+
+		try {
+			User user = getUserService().loginUser(email, password);
+
+			if (user == null) {
+				message = "User not Found";
+			} else {
+				request.setAttribute("user", user);
+				System.out.println("User class: " + user.getRole());
+			}
+
+		} catch (ClassNotFoundException e) {
+
+			message = e.getMessage();
+		} catch (SQLException e) {
+
+			message = e.getMessage();
+		}
+
+		request.setAttribute("feedbackMessage", message);
 		RequestDispatcher rd = request.getRequestDispatcher("user-registration.jsp");
 		rd.forward(request, response);
+
 	}
 
 	private void editUser(HttpServletRequest request, HttpServletResponse response) {
