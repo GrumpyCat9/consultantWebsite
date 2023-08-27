@@ -96,8 +96,8 @@
 								class="form-select" name="role"
 								aria-label="Default select example" required>
 								<option disabled selected value="">Role</option>
-								<option value="1">Job Seeker</option>
-								<option value="2">Consultant</option>
+								<option value="2">Job Seeker</option>
+								<option value="3">Consultant</option>
 							</select>
 
 						</div>

@@ -46,6 +46,8 @@ public class UserManagerImpl implements UserManager {
 		ps.setString(6, user.getEmail());
 		ps.setString(7, user.getPassword());
 		ps.setString(8, user.getPhoneNumber());
+		
+		
 
 		boolean result = false;
 

@@ -2,6 +2,8 @@ package com.codewithnishad.consultantwebsite.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -28,6 +30,8 @@ public class UserController extends HttpServlet {
 
 		if (actionType.equals("login")) {
 			loginUser(request, response);
+		} else if (actionType.equals("all")) {
+			fetchAllUsers(request, response);
 		}
 
 	}
@@ -96,7 +100,18 @@ public class UserController extends HttpServlet {
 				message = "User not Found";
 			} else {
 				request.setAttribute("user", user);
-				System.out.println("User class: " + user.getRole());
+
+				if (user.getRole().equals("1")) {
+					response.sendRedirect("getuser?actionType=all");
+					return;
+				} else if (user.getRole().equals("2")) {
+					response.sendRedirect("jobSeeker-home-page.jsp");
+					return;
+				} else if (user.getRole().equals("3")) {
+					response.sendRedirect("jobConsultant-home-page.jsp");
+					return;
+				}
+
 			}
 
 		} catch (ClassNotFoundException e) {
@@ -108,7 +123,7 @@ public class UserController extends HttpServlet {
 		}
 
 		request.setAttribute("feedbackMessage", message);
-		RequestDispatcher rd = request.getRequestDispatcher("user-registration.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("user-login.jsp");
 		rd.forward(request, response);
 
 	}
@@ -125,8 +140,35 @@ public class UserController extends HttpServlet {
 
 	}
 
-	private void fetchAllUsers(HttpServletRequest request, HttpServletResponse response) {
+	private void fetchAllUsers(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+		clearMessage();
+
+		List<User> userList = new ArrayList<User>();
+
+		try {
+			userList = getUserService().fetchAllUsers();
+			
+			if(!(userList.size() > 0)) {
+				message = "No Users Found!";
+			}
+			
+		} catch (ClassNotFoundException e) {
+			message = e.getMessage();
+		} catch (SQLException e) {
+			message = e.getMessage();
+		}
+		
+		request.setAttribute("userList", userList);
+		request.setAttribute("feedbackMessage", response);
+		
+		RequestDispatcher rd = request.getRequestDispatcher("admin-home-page.jsp");
+		rd.forward(request, response);
+
+	}
+
+	private void clearMessage() {
+		message = "";
 	}
 
 }
