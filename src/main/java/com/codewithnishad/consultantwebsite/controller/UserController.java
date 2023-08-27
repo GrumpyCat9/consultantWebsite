@@ -32,6 +32,8 @@ public class UserController extends HttpServlet {
 			loginUser(request, response);
 		} else if (actionType.equals("all")) {
 			fetchAllUsers(request, response);
+		} else if (actionType.equals("single")) {
+			fetchSingleUser(request, response);
 		}
 
 	}
@@ -43,7 +45,7 @@ public class UserController extends HttpServlet {
 
 		if (actionType.equals("add")) {
 			addUser(request, response);
-		} else if (actionType.equals("edit")) {
+		} else if (actionType.equals("update")) {
 			editUser(request, response);
 		} else if (actionType.equals("delete")) {
 			deleteUser(request, response);
@@ -54,6 +56,8 @@ public class UserController extends HttpServlet {
 
 	private void addUser(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
+		clearMessage();
 
 		User user = new User();
 
@@ -73,7 +77,9 @@ public class UserController extends HttpServlet {
 				RequestDispatcher rd = request.getRequestDispatcher("user-login.jsp");
 				rd.forward(request, response);
 			} else {
-				message = "Failed";
+				message = "Email already in Use";
+				RequestDispatcher rd = request.getRequestDispatcher("user-registration.jsp");
+				rd.forward(request, response);
 			}
 		} catch (ClassNotFoundException e) {
 
@@ -90,6 +96,8 @@ public class UserController extends HttpServlet {
 	private void loginUser(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
+		clearMessage();
+
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 
@@ -101,13 +109,13 @@ public class UserController extends HttpServlet {
 			} else {
 				request.setAttribute("user", user);
 
-				if (user.getRole().equals("1")) {
+				if (user.getRole().equals("Admin")) {
 					response.sendRedirect("getuser?actionType=all");
 					return;
-				} else if (user.getRole().equals("2")) {
+				} else if (user.getRole().equals("Job Seeker")) {
 					response.sendRedirect("jobSeeker-home-page.jsp");
 					return;
-				} else if (user.getRole().equals("3")) {
+				} else if (user.getRole().equals("Consultant")) {
 					response.sendRedirect("jobConsultant-home-page.jsp");
 					return;
 				}
@@ -128,42 +136,99 @@ public class UserController extends HttpServlet {
 
 	}
 
-	private void editUser(HttpServletRequest request, HttpServletResponse response) {
+	private void editUser(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
+		clearMessage();
+
+		User user = new User();
+
+		user.setUserId(Integer.parseInt(request.getParameter("userId")));
+		user.setFirstName(request.getParameter("firstName"));
+		user.setLastName(request.getParameter("lastName"));
+		user.setAge(Integer.parseInt(request.getParameter("age")));
+		user.setGender(request.getParameter("gender"));
+		user.setEmail(request.getParameter("email"));
+		user.setPhoneNumber(request.getParameter("phoneNumber"));
+		user.setRole(request.getParameter("role"));
+		user.setPassword(request.getParameter("password"));
+
+		try {
+			if (getUserService().editUser(user)) {
+				message = "User has been successfully updated";
+			} else {
+				message = "Failed to update the user";
+			}
+		} catch (ClassNotFoundException e) {
+
+			message = e.getMessage();
+		} catch (SQLException e) {
+
+			message = e.getMessage();
+		}
+
+		request.setAttribute("feedbackMessage", message);
+		response.sendRedirect("getuser?actionType=all");
 	}
 
-	private void deleteUser(HttpServletRequest request, HttpServletResponse response) {
+	private void deleteUser(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
+		clearMessage();
+
+		int userId = Integer.parseInt(request.getParameter("userId"));
+
+		try {
+			if (getUserService().deleteUser(userId)) {
+				message = "User has been successfully deleted";
+			} else {
+				message = "Failed to delete user";
+			}
+		} catch (ClassNotFoundException e) {
+
+			message = e.getMessage();
+		} catch (SQLException e) {
+
+			message = e.getMessage();
+		}
+		
+		request.setAttribute("feedbackMessage", message);
+		
+		response.sendRedirect("getuser?actionType=all");
 	}
 
 	private void fetchSingleUser(HttpServletRequest request, HttpServletResponse response) {
 
 	}
 
-	private void fetchAllUsers(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		clearMessage();
+	private void fetchAllUsers(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 
 		List<User> userList = new ArrayList<User>();
 
 		try {
 			userList = getUserService().fetchAllUsers();
-			
-			if(!(userList.size() > 0)) {
+
+			if (!(userList.size() > 0)) {
 				message = "No Users Found!";
+
+				System.out.print(message);
 			}
-			
+
 		} catch (ClassNotFoundException e) {
 			message = e.getMessage();
 		} catch (SQLException e) {
 			message = e.getMessage();
 		}
-		
+
+		System.out.print(message);
+
 		request.setAttribute("userList", userList);
-		request.setAttribute("feedbackMessage", response);
-		
+		request.setAttribute("feedbackMessage", message);
+
 		RequestDispatcher rd = request.getRequestDispatcher("admin-home-page.jsp");
 		rd.forward(request, response);
+
+		clearMessage();
 
 	}
 

@@ -21,6 +21,25 @@
 <script src="sweetalert2.min.js"></script>
 <link rel="stylesheet" href="sweetalert2.min.css">
 
+<script>
+	document.addEventListener("DOMContentLoaded", function() {
+		var feedbackMessage = "${feedbackMessage}";
+		if (feedbackMessage === "User not Found") {
+			Swal.fire({
+				icon : 'error',
+				title : 'User not Found',
+				text : 'Wrong Email or Password',
+			});
+		} else if (feedbackMessage.startsWith("Error")) {
+			Swal.fire({
+				icon : 'error',
+				title : 'Registration Error',
+				text : 'An error occurred during registration.',
+			});
+		}
+	});
+</script>
+
 </head>
 <body>
 

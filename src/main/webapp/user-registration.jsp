@@ -34,6 +34,12 @@
 				title : 'Registration Error',
 				text : 'An error occurred during registration.',
 			});
+		} else if (feedbackMessage = "Email already in Use") {
+			Swal.fire({
+				icon : 'error',
+				title : 'Registration Failed',
+				text : 'Email Already in Use.',
+			});
 		}
 	});
 </script>
@@ -96,8 +102,8 @@
 								class="form-select" name="role"
 								aria-label="Default select example" required>
 								<option disabled selected value="">Role</option>
-								<option value="2">Job Seeker</option>
-								<option value="3">Consultant</option>
+								<option value="Job Seeker">Job Seeker</option>
+								<option value="Consultant">Consultant</option>
 							</select>
 
 						</div>
@@ -116,8 +122,10 @@
 					<button type="submit" class="btn btn-primary"
 						style="width: 100%; background-color: #e27a39; border: none;">Register</button>
 				</div>
-				<div style="display:flex; justify-content: center; margin-top: 15px">
-					<a href="user-login.jsp" style="color: black">Already have an account? Login here.</a>
+				<div
+					style="display: flex; justify-content: center; margin-top: 15px">
+					<a href="user-login.jsp" style="color: black">Already have an
+						account? Login here.</a>
 				</div>
 
 

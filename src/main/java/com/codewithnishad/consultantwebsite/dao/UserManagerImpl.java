@@ -35,6 +35,11 @@ public class UserManagerImpl implements UserManager {
 
 		Connection connection = getConnection();
 
+		if (isEmailUsed(user.getEmail(), connection)) {
+			connection.close();
+			return false;
+		}
+
 		String query = "INSERT INTO users(firstName, lastName, age,gender,role,email,password,phoneNumber) VALUES(?,?,?,?,?,?,?,?)";
 		PreparedStatement ps = connection.prepareStatement(query);
 
@@ -46,8 +51,6 @@ public class UserManagerImpl implements UserManager {
 		ps.setString(6, user.getEmail());
 		ps.setString(7, user.getPassword());
 		ps.setString(8, user.getPhoneNumber());
-		
-		
 
 		boolean result = false;
 
@@ -222,6 +225,25 @@ public class UserManagerImpl implements UserManager {
 		}
 
 		return user;
+	}
+
+	private boolean isEmailUsed(String email, Connection connection) throws SQLException {
+
+		String query = "SELECT COUNT(*) FROM users WHERE email = ?";
+
+		PreparedStatement ps = connection.prepareStatement(query);
+
+		ps.setString(1, email);
+
+		ResultSet rs = ps.executeQuery();
+
+		rs.next();
+
+		int count = rs.getInt(1);
+
+		rs.close();
+		ps.close();
+		return count > 0;
 	}
 
 }
