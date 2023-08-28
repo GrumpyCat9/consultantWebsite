@@ -23,6 +23,42 @@
 
 
 <script>
+
+function confirmDelete(userId) {
+    return new Promise((resolve) => {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                resolve(true);
+            } else {
+                resolve(false);
+            }
+        });
+    });
+}
+
+// Attach event listener to the forms
+document.addEventListener("DOMContentLoaded", function() {
+    const deleteForms = document.querySelectorAll('[data-confirm-delete]');
+    deleteForms.forEach(form => {
+        form.addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const shouldDelete = await confirmDelete(form.getAttribute('data-confirm-delete'));
+            if (shouldDelete) {
+                form.submit();
+            }
+        });
+    });
+});
+
+
 	document.addEventListener("DOMContentLoaded", function() {
 		var feedbackMessage = "${feedbackMessage}";
 		if (feedbackMessage === "User has been successfully updated") {
@@ -124,8 +160,9 @@
 										data-bs-toggle="modal" data-bs-target="#${user.userId}"
 										style="background-color: lightgreen; color: black; border: none; margin-right: 10px">
 										Update User</button>
-									<form id="deleteForm_${user.userId}" action="usermanager"
-										method="post">
+									<form data-confirm-delete="${user.userId}" id="deleteForm_${user.userId}" action="usermanager"
+										method="post"
+										onsubmit="return confirmDelete('${user.userId}')">
 										<input type="hidden" name="userId" value="${user.userId}">
 										<input type="hidden" name="actiontype" value="delete">
 										<button type="submit" class="btn btn-primary"
