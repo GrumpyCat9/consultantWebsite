@@ -49,4 +49,8 @@ public class UserService {
 	public List<User> fetchAllUsers() throws ClassNotFoundException, SQLException {
 		return getUserManager().fetchAllUsers();
 	}
+	
+	public List<User> fetchAllConsultants() throws ClassNotFoundException, SQLException {
+		return getUserManager().fetchAllConsultants();
+	}
 }

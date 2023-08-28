@@ -34,6 +34,8 @@ public class UserController extends HttpServlet {
 			fetchAllUsers(request, response);
 		} else if (actionType.equals("single")) {
 			fetchSingleUser(request, response);
+		} else if (actionType.equals("consultants")) {
+			fetchAllConsultants(request, response);
 		}
 
 	}
@@ -176,15 +178,16 @@ public class UserController extends HttpServlet {
 
 		try {
 			if (getUserService().editUser(user)) {
-				
+
 				if (user.getRole().equals("Job Seeker")) {
 					message = "User has been successfully updated";
 					request.setAttribute("feedbackMessage", message);
-				
-					String redirectURL = "getuser?actionType=login&email=" + user.getEmail() + "&password=" + user.getPassword();
-					
+
+					String redirectURL = "getuser?actionType=login&email=" + user.getEmail() + "&password="
+							+ user.getPassword();
+
 					response.sendRedirect(redirectURL);
-					
+
 					return;
 				}
 
@@ -264,6 +267,36 @@ public class UserController extends HttpServlet {
 
 		clearMessage();
 
+	}
+
+	private void fetchAllConsultants(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		List<User> consultantList = new ArrayList<User>();
+
+		try {
+			consultantList = getUserService().fetchAllConsultants();
+
+			if (!(consultantList.size() > 0)) {
+				message = "No Users Found!";
+
+				System.out.print(message);
+			}
+
+		} catch (ClassNotFoundException e) {
+			message = e.getMessage();
+		} catch (SQLException e) {
+			message = e.getMessage();
+		}
+
+		System.out.print(message);
+
+		request.setAttribute("consultantList", consultantList);
+		request.setAttribute("feedbackMessage", message);
+
+		RequestDispatcher rd = request.getRequestDispatcher("jobSeeker-home-page.jsp");
+		rd.forward(request, response);
+
+		clearMessage();
 	}
 
 	private void clearMessage() {

@@ -246,4 +246,39 @@ public class UserManagerImpl implements UserManager {
 		return count > 0;
 	}
 
+	@Override
+	public List<User> fetchAllConsultants() throws SQLException, ClassNotFoundException {
+		
+		Connection connection = getConnection();
+
+		String query = "SELECT * FROM users where role = \"Consultant\";";
+
+		Statement st = connection.createStatement();
+
+		List<User> consaltantList = new ArrayList<User>();
+
+		ResultSet rs = st.executeQuery(query);
+
+		while (rs.next()) {
+
+			User user = new User();
+
+			user.setUserId(rs.getInt("userId"));
+			user.setFirstName(rs.getString("firstName"));
+			user.setLastName(rs.getString("lastName"));
+			user.setAge(rs.getInt("age"));
+			user.setGender(rs.getString("gender"));
+			user.setRole(rs.getString("role"));
+			user.setEmail(rs.getString("email"));
+			user.setPhoneNumber(rs.getString("phoneNumber"));
+
+			consaltantList.add(user);
+		}
+
+		st.close();
+		connection.close();
+
+		return consaltantList;
+	}
+
 }
