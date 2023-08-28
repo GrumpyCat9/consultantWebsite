@@ -103,7 +103,7 @@
 								aria-label="Default select example" required>
 								<option disabled selected value="">Role</option>
 								<option value="Job Seeker">Job Seeker</option>
-								<option value="Admin">Consultant</option>
+								<option value="Consultant">Consultant</option>
 							</select>
 
 						</div>

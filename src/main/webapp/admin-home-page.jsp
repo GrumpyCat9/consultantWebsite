@@ -44,7 +44,6 @@ function confirmDelete(userId) {
     });
 }
 
-// Attach event listener to the forms
 document.addEventListener("DOMContentLoaded", function() {
     const deleteForms = document.querySelectorAll('[data-confirm-delete]');
     deleteForms.forEach(form => {
@@ -103,15 +102,15 @@ document.addEventListener("DOMContentLoaded", function() {
 						<ul class="navbar-nav">
 							<li class="nav-item"><a class="nav-link active"
 								href="getuser?actionType=all"
-								style="background-color: white; border-radius: 50px; padding-left: 20px; padding-right: 20px">Users</a></li>
+								style="background-color: white; border-radius: 50px; padding-left: 20px; padding-right: 20px;font-weight: 600;">Users</a></li>
 							<li class="nav-item"><a class="nav-link"
 								href="user-login.jsp"
-								style="padding-left: 20px; padding-right: 20px">Reports</a></li>
+								style="padding-left: 20px; padding-right: 20px font-weight: 600;">Reports</a></li>
 
 						</ul>
 
 						<a href="user-login.jsp" class="btn btn-primary"
-							style="background-color: white; color: black; border: none; border-radius: 50px; padding-left: 20px; padding-right: 20px">Logout</a>
+							style="background-color: white; color: black; border: none;font-weight: 600; border-radius: 50px; padding-left: 20px; padding-right: 20px">Logout</a>
 					</div>
 				</div>
 			</nav>
@@ -122,10 +121,11 @@ document.addEventListener("DOMContentLoaded", function() {
 			<div
 				style="display: flex; flex-direction: row; justify-content: space-between; margin-bottom: 25px">
 				<h2>Users</h2>
-				<button type="button" class="btn btn-primary"
-					data-bs-toggle="newUserModal" data-bs-target="newUserModal"
-					style="border: none; background-color: #e27a39; color: black; height: 38px">Add
+				<button type="button" class="btn btn-primary" data-bs-toggle="modal"
+					data-bs-target="#addUserModal"
+					style="border: 1px solid black; background-color: white; color: black; height: 38px; font-weight: 600">Add
 					User</button>
+
 			</div>
 
 
@@ -158,15 +158,16 @@ document.addEventListener("DOMContentLoaded", function() {
 								<div style="display: flex">
 									<button type="button" class="btn btn-primary"
 										data-bs-toggle="modal" data-bs-target="#${user.userId}"
-										style="background-color: lightgreen; color: black; border: none; margin-right: 10px">
+										style="background-color: lightgreen; color: black; border: none; margin-right: 10px; font-weight: 600">
 										Update User</button>
-									<form data-confirm-delete="${user.userId}" id="deleteForm_${user.userId}" action="usermanager"
+									<form data-confirm-delete="${user.userId}"
+										id="deleteForm_${user.userId}" action="usermanager"
 										method="post"
 										onsubmit="return confirmDelete('${user.userId}')">
 										<input type="hidden" name="userId" value="${user.userId}">
 										<input type="hidden" name="actiontype" value="delete">
 										<button type="submit" class="btn btn-primary"
-											style="background-color: red; color: black; border: none">
+											style="background-color: red; color: black; border: none; font-weight: 600">
 											Delete User</button>
 									</form>
 								</div>
@@ -174,7 +175,7 @@ document.addEventListener("DOMContentLoaded", function() {
 							</td>
 						</tr>
 
-						<!-- Modal for each user -->
+						<!-- Modal for Update User -->
 						<div class="modal fade" id="${user.userId}" tabindex="-1"
 							role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
 							<div class="modal-dialog" role="document"
@@ -192,7 +193,7 @@ document.addEventListener("DOMContentLoaded", function() {
 											<div
 												style="display: flex; justify-content: space-Between; background-color: white; width: 900px; padding: 25px; box-shadow: 5px 5px 5px #0313D; border-radius: 12px">
 												<div style="width: 400px;">
-													<div class="form-group" style="padding-top: 15px">
+													<div class="form-group">
 														<label for="exampleInputEmail1">User ID</label> <input
 															type="text" class="form-control" id="userId"
 															name="userId" placeholder="User ID"
@@ -228,7 +229,7 @@ document.addEventListener("DOMContentLoaded", function() {
 													</div>
 												</div>
 												<div style="width: 400px;">
-													<div class="form-group" style="padding-top: 15px">
+													<div class="form-group">
 														<label for="exampleInputEmail1">Email</label> <input
 															type="email" class="form-control" id="email" name="email"
 															placeholder="Email" required value="${user.email}">
@@ -278,6 +279,98 @@ document.addEventListener("DOMContentLoaded", function() {
 					</tag:forEach>
 				</tbody>
 			</table>
+
+			<!-- Modal for Add User -->
+			<div class="modal fade" id="addUserModal" tabindex="-1" role="dialog"
+				aria-labelledby="addUserModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document"
+					style="width: 100%; display: flex; justify-content: center; align-items: center">
+					<div class="modal-content" style="width: fit-content;">
+						<div class="modal-header">
+							<h5 class="modal-title" id="addUserModalLabel">Add User</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal"
+								aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							<form action="usermanager" method="post">
+								<div
+									style="display: flex; justify-content: space-Between; background-color: white; width: 900px; padding: 25px; box-shadow: 5px 5px 5px #0313D; border-radius: 12px">
+									<div style="width: 400px;">
+										<div class="form-group">
+											<label for="exampleInputEmail1">First Name</label> <input
+												type="text" class="form-control" id="firstName"
+												name="firstName" placeholder="First Name" required>
+										</div>
+										<div class="form-group" style="padding-top: 15px">
+											<label for="exampleInputPassword1">Last Name</label> <input
+												type="text" class="form-control" id="lastName"
+												name="lastName" placeholder="Last Name" required>
+										</div>
+										<div class="form-group" style="padding-top: 15px">
+											<label for="exampleInputEmail1">Age</label> <input
+												type="number" class="form-control" id="age" name="age"
+												placeholder="Age" required>
+										</div>
+										<div class="form-group" style="padding-top: 15px">
+											<label for="exampleInputPassword1">Gender</label> <select
+												class="form-select" id="gender" name="gender"
+												aria-label="Default select example" required>
+												<option disabled selected value="">Gender</option>
+												<option value="Male">Male</option>
+												<option value="Female">Female</option>
+												<option value="NotMentioned">Prefer not to say</option>
+											</select>
+										</div>
+									</div>
+									<div style="width: 400px;">
+										<div class="form-group">
+											<label for="exampleInputEmail1">Email</label> <input
+												type="email" class="form-control" id="email" name="email"
+												placeholder="Email" required>
+										</div>
+										<div class="form-group" style="padding-top: 15px">
+											<label for="exampleInputPassword1">Phone Number</label> <input
+												type="number" class="form-control" id="phoneNumber"
+												name="phoneNumber" placeholder="Phone Number" required>
+										</div>
+										<div class="form-group" style="padding-top: 15px">
+											<label for="exampleInputEmail1">Role</label> <select
+												class="form-select" name="role"
+												aria-label="Default select example" required>
+												<option disabled selected value="">Role</option>
+												<option value="Admin">Admin</option>
+												<option value="Receptionist">Receptionist</option>
+												<option value="Job Seeker">Job Seeker</option>
+												<option value="Consultant">Consultant</option>
+											</select>
+
+										</div>
+										<div class="form-group"
+											style="padding-top: 15px; padding-bottom: 15px">
+											<label for="exampleInputPassword1">Password</label> <input
+												type="password" class="form-control" id="password"
+												name="password" placeholder="Password" required>
+										</div>
+									</div>
+								</div>
+
+								<div
+									style="display: flex; justify-content: center; padding-top: 10px;">
+									<input type="hidden" name="actiontype" value="newUser" />
+									<button type="submit" class="btn btn-primary"
+										style="width: 100%; background-color: #e27a39; border: none;">Add
+										User</button>
+								</div>
+
+							</form>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary"
+								data-bs-dismiss="modal">Close</button>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 

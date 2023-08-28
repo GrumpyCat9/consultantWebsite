@@ -45,7 +45,11 @@ public class UserController extends HttpServlet {
 
 		if (actionType.equals("add")) {
 			addUser(request, response);
+		} else if (actionType.equals("newUser")) {
+			addUser(request, response);
 		} else if (actionType.equals("update")) {
+			editUser(request, response);
+		} else if (actionType.equals("updateSingleUser")) {
 			editUser(request, response);
 		} else if (actionType.equals("delete")) {
 			deleteUser(request, response);
@@ -59,6 +63,7 @@ public class UserController extends HttpServlet {
 
 		clearMessage();
 
+		String actionType = request.getParameter("actiontype");
 		User user = new User();
 
 		user.setFirstName(request.getParameter("firstName"));
@@ -74,12 +79,23 @@ public class UserController extends HttpServlet {
 			if (getUserService().addUser(user)) {
 				message = "Registered";
 
-				RequestDispatcher rd = request.getRequestDispatcher("user-login.jsp");
-				rd.forward(request, response);
+				if (actionType.equals("add")) {
+					RequestDispatcher rd = request.getRequestDispatcher("user-login.jsp");
+					rd.forward(request, response);
+				} else {
+					response.sendRedirect("getuser?actionType=all");
+				}
+
 			} else {
-				message = "Email already in Use";
-				RequestDispatcher rd = request.getRequestDispatcher("user-registration.jsp");
-				rd.forward(request, response);
+
+				if (actionType.equals("add")) {
+					message = "Email already in Use";
+					RequestDispatcher rd = request.getRequestDispatcher("user-registration.jsp");
+					rd.forward(request, response);
+				} else {
+					response.sendRedirect("getuser?actionType=all");
+				}
+
 			}
 		} catch (ClassNotFoundException e) {
 
@@ -107,14 +123,19 @@ public class UserController extends HttpServlet {
 			if (user == null) {
 				message = "User not Found";
 			} else {
-				request.setAttribute("user", user);
 
 				if (user.getRole().equals("Admin")) {
 					response.sendRedirect("getuser?actionType=all");
 					return;
+
 				} else if (user.getRole().equals("Job Seeker")) {
-					response.sendRedirect("jobSeeker-home-page.jsp");
+
+					request.setAttribute("user", user);
+					RequestDispatcher rd = request.getRequestDispatcher("jobSeeker-home-page.jsp");
+					rd.forward(request, response);
+
 					return;
+
 				} else if (user.getRole().equals("Consultant")) {
 					response.sendRedirect("jobConsultant-home-page.jsp");
 					return;
@@ -155,6 +176,18 @@ public class UserController extends HttpServlet {
 
 		try {
 			if (getUserService().editUser(user)) {
+				
+				if (user.getRole().equals("Job Seeker")) {
+					message = "User has been successfully updated";
+					request.setAttribute("feedbackMessage", message);
+				
+					String redirectURL = "getuser?actionType=login&email=" + user.getEmail() + "&password=" + user.getPassword();
+					
+					response.sendRedirect(redirectURL);
+					
+					return;
+				}
+
 				message = "User has been successfully updated";
 			} else {
 				message = "Failed to update the user";
@@ -171,7 +204,8 @@ public class UserController extends HttpServlet {
 		response.sendRedirect("getuser?actionType=all");
 	}
 
-	private void deleteUser(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+	private void deleteUser(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
 
 		clearMessage();
 
@@ -190,9 +224,9 @@ public class UserController extends HttpServlet {
 
 			message = e.getMessage();
 		}
-		
+
 		request.setAttribute("feedbackMessage", message);
-		
+
 		response.sendRedirect("getuser?actionType=all");
 	}
 
