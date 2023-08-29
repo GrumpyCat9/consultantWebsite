@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1" isELIgnored="false"%>
 <%@ taglib prefix="tag" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<tag:if test="${cookie.user.value ne 'Admin'}">
+	<tag:redirect url="user-login.jsp" />
+</tag:if>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -102,7 +107,7 @@ document.addEventListener("DOMContentLoaded", function() {
 						<ul class="navbar-nav">
 							<li class="nav-item"><a class="nav-link active"
 								href="getuser?actionType=all"
-								style="background-color: white; border-radius: 50px; padding-left: 20px; padding-right: 20px;font-weight: 600;">Users</a></li>
+								style="background-color: white; border-radius: 50px; padding-left: 20px; padding-right: 20px; font-weight: 600;">Users</a></li>
 							<li class="nav-item"><a class="nav-link"
 								href="user-login.jsp"
 								style="padding-left: 20px; padding-right: 20px font-weight: 600;">Reports</a></li>
@@ -110,7 +115,7 @@ document.addEventListener("DOMContentLoaded", function() {
 						</ul>
 
 						<a href="user-login.jsp" class="btn btn-primary"
-							style="background-color: white; color: black; border: none;font-weight: 600; border-radius: 50px; padding-left: 20px; padding-right: 20px">Logout</a>
+							style="background-color: white; color: black; border: none; font-weight: 600; border-radius: 50px; padding-left: 20px; padding-right: 20px">Logout</a>
 					</div>
 				</div>
 			</nav>

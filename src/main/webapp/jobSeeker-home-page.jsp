@@ -2,6 +2,11 @@
 	pageEncoding="ISO-8859-1" isELIgnored="false"%>
 
 <%@ taglib prefix="tag" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<tag:if test="${cookie.user.value ne 'JobSeeker'}">
+	<tag:redirect url="user-login.jsp" />
+</tag:if>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,12 +58,12 @@
 			</nav>
 		</div>
 		<div
-			style="display: flex; flex-direction: column; justify-content: center; text-align: center; padding: 100px">
+			style="display: flex; flex-direction: column; justify-content: center; text-align: center; padding: 50px">
 			<div>
 				<form>
 					<input type="hidden" name="actionType" value="consultants">
 					<Button type="submit"
-						style="height: 50px; padding-right: 25px; padding-left: 25px; border: none; border-radius: 50px; background: black; color: white">Show
+						style="margin-bottom: 25px; height: 50px; padding-right: 25px; padding-left: 25px; border: none; border-radius: 50px; background: black; color: white">Show
 						All Consultants</Button>
 				</form>
 
@@ -68,7 +73,7 @@
 				<table class="table">
 					<thead>
 						<tr>
-							<th scope="col">User ID</th>
+
 							<th scope="col">First Name</th>
 							<th scope="col">Last Name</th>
 							<th scope="col">Gender</th>
@@ -79,7 +84,7 @@
 					<tbody>
 						<tag:forEach var="user" items="${consultantList}">
 							<tr>
-								<td>${user.userId}</td>
+
 								<td>${user.firstName}</td>
 								<td>${user.lastName}</td>
 								<td>${user.gender}</td>

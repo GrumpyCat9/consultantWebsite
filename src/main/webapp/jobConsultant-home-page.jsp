@@ -1,5 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
+
+<%@ taglib prefix="tag" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<tag:if test="${cookie.user.value ne 'Consultant'}">
+	<tag:redirect url="user-login.jsp" />
+</tag:if>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +15,7 @@
 </head>
 <body>
 
-<h1>Job Consultant home page</h1>
+	<h1>Job Consultant home page</h1>
 
 </body>
 </html>

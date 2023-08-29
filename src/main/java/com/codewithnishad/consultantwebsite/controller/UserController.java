@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -126,12 +127,18 @@ public class UserController extends HttpServlet {
 				message = "User not Found";
 			} else {
 
+				Cookie userCookie = new Cookie("user", user.getRole());
+				
 				if (user.getRole().equals("Admin")) {
+					
+					response.addCookie(userCookie);
 					response.sendRedirect("getuser?actionType=all");
 					return;
 
 				} else if (user.getRole().equals("Job Seeker")) {
 
+					Cookie userCookieJobSeeker = new Cookie("user", "JobSeeker");
+					response.addCookie(userCookieJobSeeker);
 					request.setAttribute("user", user);
 					RequestDispatcher rd = request.getRequestDispatcher("jobSeeker-home-page.jsp");
 					rd.forward(request, response);
@@ -139,6 +146,7 @@ public class UserController extends HttpServlet {
 					return;
 
 				} else if (user.getRole().equals("Consultant")) {
+					response.addCookie(userCookie);
 					response.sendRedirect("jobConsultant-home-page.jsp");
 					return;
 				}
