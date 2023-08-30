@@ -127,18 +127,41 @@ public class UserController extends HttpServlet {
 				message = "User not Found";
 			} else {
 
-				Cookie userCookie = new Cookie("user", user.getRole());
-				
+				Cookie userCookieFirstName = new Cookie("userFirstName", user.getFirstName());
+				Cookie userCookieLastName = new Cookie("userLastName", user.getLastName());
+				Cookie userCookieGender = new Cookie("userGender", user.getGender());
+				Cookie userCookieAge = new Cookie("userAge", String.valueOf(user.getAge()));
+				Cookie userCookieEmail = new Cookie("userEmail", user.getEmail());
+				Cookie userCookieUserId = new Cookie("userId", String.valueOf(user.getUserId()));
+				Cookie userCookieRole = new Cookie("userRole", user.getRole());
+				Cookie userCookiePhoneNumber = new Cookie("userPhoneNumber", user.getPhoneNumber());
+
 				if (user.getRole().equals("Admin")) {
-					
-					response.addCookie(userCookie);
+
+					response.addCookie(userCookieFirstName);
+					response.addCookie(userCookieLastName);
+					response.addCookie(userCookieGender);
+					response.addCookie(userCookieAge);
+					response.addCookie(userCookieEmail);
+					response.addCookie(userCookieUserId);
+					response.addCookie(userCookieRole);
+					response.addCookie(userCookiePhoneNumber);
+				
 					response.sendRedirect("getuser?actionType=all");
 					return;
 
 				} else if (user.getRole().equals("Job Seeker")) {
 
-					Cookie userCookieJobSeeker = new Cookie("user", "JobSeeker");
+					Cookie userCookieJobSeeker = new Cookie("userRole", "JobSeeker");
+					response.addCookie(userCookieFirstName);
+					response.addCookie(userCookieLastName);
+					response.addCookie(userCookieGender);
+					response.addCookie(userCookieAge);
+					response.addCookie(userCookieEmail);
+					response.addCookie(userCookieUserId);
 					response.addCookie(userCookieJobSeeker);
+					response.addCookie(userCookiePhoneNumber);
+					
 					request.setAttribute("user", user);
 					RequestDispatcher rd = request.getRequestDispatcher("jobSeeker-home-page.jsp");
 					rd.forward(request, response);
@@ -146,7 +169,15 @@ public class UserController extends HttpServlet {
 					return;
 
 				} else if (user.getRole().equals("Consultant")) {
-					response.addCookie(userCookie);
+					response.addCookie(userCookieFirstName);
+					response.addCookie(userCookieLastName);
+					response.addCookie(userCookieGender);
+					response.addCookie(userCookieAge);
+					response.addCookie(userCookieEmail);
+					response.addCookie(userCookieUserId);
+					response.addCookie(userCookieRole);
+					response.addCookie(userCookiePhoneNumber);
+					
 					response.sendRedirect("jobConsultant-home-page.jsp");
 					return;
 				}

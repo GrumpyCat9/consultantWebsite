@@ -3,7 +3,7 @@
 
 <%@ taglib prefix="tag" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<tag:if test="${cookie.user.value ne 'JobSeeker'}">
+<tag:if test="${cookie.userRole.value ne 'JobSeeker'}">
 	<tag:redirect url="user-login.jsp" />
 </tag:if>
 
@@ -117,81 +117,43 @@
 										<div class="modal-body">
 											<form action="usermanager" method="post">
 												<div
-													style="display: flex; justify-content: space-Between; background-color: white; width: 900px; padding: 25px; box-shadow: 5px 5px 5px #0313D; border-radius: 12px">
-													<div style="width: 400px;">
+													style="display: flex; justify-content: space-Between; background-color: white; padding: 25px; box-shadow: 5px 5px 5px #0313D; border-radius: 12px">
+													<div>
 														<div class="form-group">
-															<label for="exampleInputEmail1">User ID</label> <input
+															<label for="exampleInputEmail1">Consultant ID</label> <input
 																type="text" class="form-control" id="userId"
-																name="userId" placeholder="User ID"
-																value="${user.userId}" required readonly>
+																name="consultantID" value="${user.userId}" required
+																readonly>
 														</div>
 
 														<div class="form-group" style="padding-top: 15px">
-															<label for="exampleInputEmail1">First Name</label> <input
+															<label for="exampleInputEmail1">Job Seeker ID</label> <input
 																type="text" class="form-control" id="firstName"
-																name="firstName" placeholder="First Name"
-																value="${user.firstName}" required>
+																name=jobSeekerId value="${cookie.ID.value}" required
+																readonly>
 														</div>
 														<div class="form-group" style="padding-top: 15px">
-															<label for="exampleInputPassword1">Last Name</label> <input
-																type="text" class="form-control" id="lastName"
-																name="lastName" placeholder="Last Name" required
-																value="${user.lastName}">
+															<label for="exampleInputPassword1">Appointment
+																Date</label> <input type="date" class="form-control"
+																id="lastName" name="lastName" placeholder="Last Name"
+																required>
 														</div>
 														<div class="form-group" style="padding-top: 15px">
-															<label for="exampleInputEmail1">Age</label> <input
-																type="number" class="form-control" id="age" name="age"
-																placeholder="Age" required value="${user.age}">
+															<label for="exampleInputEmail1">Time</label> <input
+																type="time" class="form-control" id="age" name="age"
+																placeholder="Age" required>
 														</div>
-														<div class="form-group" style="padding-top: 15px">
-															<label for="exampleInputPassword1">Gender</label> <select
-																class="form-select" id="gender" name="gender"
-																aria-label="Default select example" required>
-																<option disabled selected value="">Gender</option>
-																<option value="Male">Male</option>
-																<option value="Female">Female</option>
-																<option value="NotMentioned">Prefer not to say</option>
-															</select>
-														</div>
-													</div>
-													<div style="width: 400px;">
-														<div class="form-group">
-															<label for="exampleInputEmail1">Email</label> <input
-																type="email" class="form-control" id="email"
-																name="email" placeholder="Email" required
-																value="${user.email}">
-														</div>
-														<div class="form-group" style="padding-top: 15px">
-															<label for="exampleInputPassword1">Phone Number</label> <input
-																type="number" class="form-control" id="phoneNumber"
-																name="phoneNumber" placeholder="Phone Number" required
-																value="${user.phoneNumber}">
-														</div>
-														<div class="form-group" style="padding-top: 15px">
-															<label for="exampleInputEmail1">Role</label> <select
-																class="form-select" name="role"
-																aria-label="Default select example" required>
-																<option disabled selected value="">Role</option>
-																<option value="Admin">Admin</option>
-																<option value="Job Seeker">Job Seeker</option>
-																<option value="Consultant">Consultant</option>
-															</select>
 
-														</div>
-														<div class="form-group"
-															style="padding-top: 15px; padding-bottom: 15px">
-															<label for="exampleInputPassword1">Password</label> <input
-																type="password" class="form-control" id="password"
-																name="password" placeholder="Password" required>
-														</div>
 													</div>
 												</div>
 
 												<div
 													style="display: flex; justify-content: center; padding-top: 10px;">
-													<input type="hidden" name="actiontype" value="update" />
+													<input type="hidden" name="actiontype"
+														value="addAppointment" />
 													<button type="submit" class="btn btn-primary"
-														style="width: 100%; background-color: #e27a39; border: none;">Update</button>
+														style="width: 100%; background-color: #e27a39; border: none;">Add
+														Appointment</button>
 												</div>
 
 											</form>
@@ -230,23 +192,23 @@
 								<div class="form-group">
 									<label for="exampleInputEmail1">User ID</label> <input
 										type="text" class="form-control" id="userId" name="userId"
-										placeholder="User ID" value="${user.userId}" required readonly>
+										placeholder="User ID" value="${cookie.userId.value}" required readonly>
 								</div>
 								<div class="form-group" style="padding-top: 15px">
 									<label for="exampleInputEmail1">First Name</label> <input
 										type="text" class="form-control" id="firstName"
 										name="firstName" placeholder="First Name"
-										value="${user.firstName}" required>
+										value="${cookie.userFirstName.value}" required>
 								</div>
 								<div class="form-group" style="padding-top: 15px">
 									<label for="exampleInputPassword1">Last Name</label> <input
 										type="text" class="form-control" id="lastName" name="lastName"
-										placeholder="Last Name" required value="${user.lastName}">
+										placeholder="Last Name" required value="${cookie.userLastName.value}">
 								</div>
 								<div class="form-group" style="padding-top: 15px">
 									<label for="exampleInputEmail1">Age</label> <input
 										type="number" class="form-control" id="age" name="age"
-										placeholder="Age" required value="${user.age}">
+										placeholder="Age" required value="${cookie.userAge.value}">
 								</div>
 								<div class="form-group" style="padding-top: 15px">
 									<label for="exampleInputPassword1">Gender</label> <select
@@ -263,19 +225,19 @@
 								<div class="form-group">
 									<label for="exampleInputEmail1">Email</label> <input
 										type="email" class="form-control" id="email" name="email"
-										placeholder="Email" required value="${user.email}">
+										placeholder="Email" required value="${cookie.userEmail.value}">
 								</div>
 								<div class="form-group" style="padding-top: 15px">
 									<label for="exampleInputPassword1">Phone Number</label> <input
 										type="number" class="form-control" id="phoneNumber"
 										name="phoneNumber" placeholder="Phone Number" required
-										value="${user.phoneNumber}">
+										value="${cookie.userPhoneNumber.value}">
 								</div>
 								<div class="form-group" style="padding-top: 15px">
 									<label for="exampleInputEmail1">Role</label> <select
 										class="form-select" name="role"
 										aria-label="Default select example" required>
-										<option readonly selected value="${user.role}">${user.role}
+										<option readonly selected value="${cookie.userRole.value}">${user.role}
 										</option>
 									</select>
 
