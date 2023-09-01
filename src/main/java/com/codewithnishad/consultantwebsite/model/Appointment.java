@@ -2,23 +2,25 @@ package com.codewithnishad.consultantwebsite.model;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class Appointment {
 
 	private int appointmentId;
 	private int jobSeekerId;
 	private int consultantId;
-	private Date appointmentDate;
+	private LocalDate appointmentDate;
 	private Time duration;
-	private Time startTime;
-	private Time endTime;
+	private LocalTime startTime;
+	private LocalTime endTime;
 	
 	public Appointment() {
 		
 	}
 
-	public Appointment(int appointmentId, int jobSeekerId, int consultantId, Date appointmentDate, Time duration,
-			Time startTime, Time endTime) {
+	public Appointment(int appointmentId, int jobSeekerId, int consultantId, LocalDate appointmentDate, Time duration,
+			LocalTime startTime, LocalTime endTime) {
 		super();
 		this.appointmentId = appointmentId;
 		this.jobSeekerId = jobSeekerId;
@@ -53,28 +55,28 @@ public class Appointment {
 		this.consultantId = consultantId;
 	}
 
-	public Date getAppointmentDate() {
+	public LocalDate getAppointmentDate() {
 		return appointmentDate;
 	}
 
-	public void setAppointmentDate(Date appointmentDate) {
+	public void setAppointmentDate(LocalDate appointmentDate) {
 		this.appointmentDate = appointmentDate;
 	}
 
 
-	public Time getStartTime() {
+	public LocalTime getStartTime() {
 		return startTime;
 	}
 
-	public void setStartTime(Time startTime) {
+	public void setStartTime(LocalTime startTime) {
 		this.startTime = startTime;
 	}
 
-	public Time getEndTime() {
+	public LocalTime getEndTime() {
 		return endTime;
 	}
 
-	public void setEndTime(Time endTime) {
+	public void setEndTime(LocalTime endTime) {
 		this.endTime = endTime;
 	}
 

@@ -40,9 +40,10 @@ public class AppointmentManagerImpl implements AppointmentManager {
 
 		ps.setInt(1, appointment.getJobSeekerId());
 		ps.setInt(2, appointment.getConsultantId());
-		ps.setDate(3, appointment.getAppointmentDate());
-		ps.setTime(4, appointment.getStartTime());
-		ps.setTime(5, appointment.getEndTime());
+		
+		ps.setDate(3, java.sql.Date.valueOf(appointment.getAppointmentDate()));
+	    ps.setTime(4, java.sql.Time.valueOf(appointment.getStartTime()));
+	    ps.setTime(5, java.sql.Time.valueOf(appointment.getEndTime()));
 
 		boolean result = false;
 
@@ -96,12 +97,12 @@ public class AppointmentManagerImpl implements AppointmentManager {
 			Appointment appointment = new Appointment();
 
 			appointment.setAppointmentId(rs.getInt("appointmentId"));
-			appointment.setStartTime(rs.getTime("startTime"));
-			appointment.setEndTime(rs.getTime("endTime"));
-			appointment.setDuration(rs.getTime("duration"));
-			appointment.setAppointmentDate(rs.getDate("appointmentDate"));
-			appointment.setJobSeekerId(rs.getInt("jobSeekerId"));
-			appointment.setConsultantId(rs.getInt("consultantId"));
+	        appointment.setStartTime(rs.getTime("startTime").toLocalTime());
+	        appointment.setEndTime(rs.getTime("endTime").toLocalTime());
+	        appointment.setDuration(rs.getTime("duration"));
+	        appointment.setAppointmentDate(rs.getDate("appointmentDate").toLocalDate());
+	        appointment.setJobSeekerId(rs.getInt("jobSeekerId"));
+	        appointment.setConsultantId(rs.getInt("consultantId"));
 
 			appointmentList.add(appointment);
 		}
@@ -132,12 +133,12 @@ public class AppointmentManagerImpl implements AppointmentManager {
 			Appointment appointment = new Appointment();
 
 			appointment.setAppointmentId(rs.getInt("appointmentId"));
-			appointment.setStartTime(rs.getTime("startTime"));
-			appointment.setEndTime(rs.getTime("endTime"));
-			appointment.setDuration(rs.getTime("duration"));
-			appointment.setAppointmentDate(rs.getDate("appointmentDate"));
-			appointment.setJobSeekerId(rs.getInt("jobSeekerId"));
-			appointment.setConsultantId(rs.getInt("consultantId"));
+	        appointment.setStartTime(rs.getTime("startTime").toLocalTime());
+	        appointment.setEndTime(rs.getTime("endTime").toLocalTime());
+	        appointment.setDuration(rs.getTime("duration"));
+	        appointment.setAppointmentDate(rs.getDate("appointmentDate").toLocalDate());
+	        appointment.setJobSeekerId(rs.getInt("jobSeekerId"));
+	        appointment.setConsultantId(rs.getInt("consultantId"));
 
 			appointmentList.add(appointment);
 		}
@@ -165,12 +166,12 @@ public class AppointmentManagerImpl implements AppointmentManager {
 			Appointment appointment = new Appointment();
 
 			appointment.setAppointmentId(rs.getInt("appointmentId"));
-			appointment.setStartTime(rs.getTime("startTime"));
-			appointment.setEndTime(rs.getTime("endTime"));
-			appointment.setDuration(rs.getTime("duration"));
-			appointment.setAppointmentDate(rs.getDate("appointmentDate"));
-			appointment.setJobSeekerId(rs.getInt("jobSeekerId"));
-			appointment.setConsultantId(rs.getInt("consultantId"));
+	        appointment.setStartTime(rs.getTime("startTime").toLocalTime());
+	        appointment.setEndTime(rs.getTime("endTime").toLocalTime());
+	        appointment.setDuration(rs.getTime("duration"));
+	        appointment.setAppointmentDate(rs.getDate("appointmentDate").toLocalDate());
+	        appointment.setJobSeekerId(rs.getInt("jobSeekerId"));
+	        appointment.setConsultantId(rs.getInt("consultantId"));
 
 			appointmentList.add(appointment);
 		}

@@ -57,119 +57,112 @@
 				</div>
 			</nav>
 		</div>
-		<div
-			style="display: flex; flex-direction: column; justify-content: center; text-align: center; padding: 50px">
-			<div>
-				<form>
-					<input type="hidden" name="actionType" value="consultants">
-					<Button type="submit"
-						style="margin-bottom: 25px; height: 50px; padding-right: 25px; padding-left: 25px; border: none; border-radius: 50px; background: black; color: white">Show
-						All Consultants</Button>
-				</form>
+		<div style="margin-left: 100px; margin-right: 100px; margin-top: 50px">
+			<table class="table">
+				<thead>
+					<tr>
 
-
-			</div>
-			<div>
-				<table class="table">
-					<thead>
+						<th scope="col">First Name</th>
+						<th scope="col">Last Name</th>
+						<th scope="col">Gender</th>
+						<th scope="col">Email</th>
+						<th scope="col">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tag:forEach var="user" items="${consultantList}">
 						<tr>
 
-							<th scope="col">First Name</th>
-							<th scope="col">Last Name</th>
-							<th scope="col">Gender</th>
-							<th scope="col">Email</th>
-							<th scope="col">Actions</th>
+							<td>${user.firstName}</td>
+							<td>${user.lastName}</td>
+							<td>${user.gender}</td>
+							<td>${user.email}</td>
+							<td>
+								<div style="display: flex; justify-content: left;">
+									<button type="button" class="btn btn-primary"
+										data-bs-toggle="modal" data-bs-target="#${user.userId}"
+										style="background-color: lightgreen; color: black; border: none; margin-right: 10px; font-weight: 600">
+										Add An Appointment</button>
+								</div>
+
+							</td>
 						</tr>
-					</thead>
-					<tbody>
-						<tag:forEach var="user" items="${consultantList}">
-							<tr>
 
-								<td>${user.firstName}</td>
-								<td>${user.lastName}</td>
-								<td>${user.gender}</td>
-								<td>${user.email}</td>
-								<td>
-									<div style="display: flex; justify-content: center;">
-										<button type="button" class="btn btn-primary"
-											data-bs-toggle="modal" data-bs-target="#${user.userId}"
-											style="background-color: lightgreen; color: black; border: none; margin-right: 10px; font-weight: 600">
-											Add An Appointment</button>
+						<!-- Modal for Add Appointment -->
+						<div class="modal fade" id="${user.userId}" tabindex="-1"
+							role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
+							<div class="modal-dialog" role="document"
+								style="width: 100%; display: flex; justify-content: center; align-items: center">
+								<div class="modal-content" style="width: fit-content;">
+									<div class="modal-header">
+										<h5 class="modal-title" id="userModalLabel">Add
+											Appointment</h5>
+										<button type="button" data-ds-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
 									</div>
-
-								</td>
-							</tr>
-
-							<!-- Modal for Update User -->
-							<div class="modal fade" id="${user.userId}" tabindex="-1"
-								role="dialog" aria-labelledby="userModalLabel"
-								aria-hidden="true">
-								<div class="modal-dialog" role="document"
-									style="width: 100%; display: flex; justify-content: center; align-items: center">
-									<div class="modal-content" style="width: fit-content;">
-										<div class="modal-header">
-											<h5 class="modal-title" id="userModalLabel">User Details</h5>
-											<button type="button" data-ds-dismiss="modal"
-												aria-label="Close">
-												<span aria-hidden="true">&times;</span>
-											</button>
-										</div>
-										<div class="modal-body">
-											<form action="usermanager" method="post">
-												<div
-													style="display: flex; justify-content: space-Between; background-color: white; padding: 25px; box-shadow: 5px 5px 5px #0313D; border-radius: 12px">
-													<div>
-														<div class="form-group">
-															<label for="exampleInputEmail1">Consultant ID</label> <input
-																type="text" class="form-control" id="userId"
-																name="consultantID" value="${user.userId}" required
-																readonly>
-														</div>
-
-														<div class="form-group" style="padding-top: 15px">
-															<label for="exampleInputEmail1">Job Seeker ID</label> <input
-																type="text" class="form-control" id="firstName"
-																name=jobSeekerId value="${cookie.ID.value}" required
-																readonly>
-														</div>
-														<div class="form-group" style="padding-top: 15px">
-															<label for="exampleInputPassword1">Appointment
-																Date</label> <input type="date" class="form-control"
-																id="lastName" name="lastName" placeholder="Last Name"
-																required>
-														</div>
-														<div class="form-group" style="padding-top: 15px">
-															<label for="exampleInputEmail1">Time</label> <input
-																type="time" class="form-control" id="age" name="age"
-																placeholder="Age" required>
-														</div>
-
+									<div class="modal-body">
+										<form action="appointmentmanager" method="post">
+											<div
+												style="display: flex; justify-content: space-Between; background-color: white; padding: 25px; box-shadow: 5px 5px 5px #0313D; border-radius: 12px">
+												<div>
+													<div class="form-group">
+														<label for="exampleInputEmail1">Consultant ID</label> <input
+															type="text" class="form-control" id="userId"
+															name="consultantId" value="${user.userId}" required
+															readonly>
 													</div>
-												</div>
 
-												<div
-													style="display: flex; justify-content: center; padding-top: 10px;">
-													<input type="hidden" name="actiontype"
-														value="addAppointment" />
-													<button type="submit" class="btn btn-primary"
-														style="width: 100%; background-color: #e27a39; border: none;">Add
-														Appointment</button>
-												</div>
+													<div class="form-group" style="padding-top: 15px">
+														<label for="exampleInputEmail1">Job Seeker ID</label> <input
+															type="text" class="form-control" id="firstName"
+															name=jobSeekerId value="${cookie.userId.value}" required
+															readonly>
+													</div>
+													<div class="form-group" style="padding-top: 15px">
+														<label for="exampleInputPassword1">Appointment
+															Date</label> <input type="date" class="form-control"
+															id="lastName" name="appointmentDate"
+															placeholder="Last Name" required>
+													</div>
+													<div class="form-group" style="padding-top: 15px">
+														<label for="exampleInputEmail1">Start Time</label> <input
+															type="time" class="form-control" id="startTime"
+															name="startTime" required>
+													</div>
+													<div class="form-group" style="padding-top: 15px">
+														<label for="exampleInputEmail1">End Time</label> <input
+															type="time" class="form-control" id="endTime"
+															name="endTime" required>
+													</div>
 
-											</form>
-										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-secondary"
-												data-bs-dismiss="modal">Close</button>
-										</div>
+												</div>
+											</div>
+
+											<div
+												style="display: flex; justify-content: center; padding-top: 10px;">
+												<input type="hidden" name="actionType"
+													value="addAppointment" />
+												<button type="submit" class="btn btn-primary"
+													style="width: 100%; background-color: #e27a39; border: none;">Add
+													Appointment</button>
+											</div>
+
+										</form>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary"
+											data-bs-dismiss="modal">Close</button>
 									</div>
 								</div>
 							</div>
-						</tag:forEach>
-					</tbody>
-				</table>
-			</div>
+						</div>
+					</tag:forEach>
+				</tbody>
+			</table>
 		</div>
+	</div>
 	</div>
 
 
@@ -192,7 +185,8 @@
 								<div class="form-group">
 									<label for="exampleInputEmail1">User ID</label> <input
 										type="text" class="form-control" id="userId" name="userId"
-										placeholder="User ID" value="${cookie.userId.value}" required readonly>
+										placeholder="User ID" value="${cookie.userId.value}" required
+										readonly>
 								</div>
 								<div class="form-group" style="padding-top: 15px">
 									<label for="exampleInputEmail1">First Name</label> <input
@@ -203,7 +197,8 @@
 								<div class="form-group" style="padding-top: 15px">
 									<label for="exampleInputPassword1">Last Name</label> <input
 										type="text" class="form-control" id="lastName" name="lastName"
-										placeholder="Last Name" required value="${cookie.userLastName.value}">
+										placeholder="Last Name" required
+										value="${cookie.userLastName.value}">
 								</div>
 								<div class="form-group" style="padding-top: 15px">
 									<label for="exampleInputEmail1">Age</label> <input

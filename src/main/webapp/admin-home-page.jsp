@@ -24,9 +24,6 @@
 <script src="sweetalert2.min.js"></script>
 <link rel="stylesheet" href="sweetalert2.min.css">
 
-
-
-
 <script>
 
 function confirmDelete(userId) {
@@ -109,7 +106,7 @@ document.addEventListener("DOMContentLoaded", function() {
 								href="getuser?actionType=all"
 								style="background-color: white; border-radius: 50px; padding-left: 20px; padding-right: 20px; font-weight: 600;">Users</a></li>
 							<li class="nav-item"><a class="nav-link"
-								href="user-login.jsp"
+								href="getappointment?actionType=allAppointments"
 								style="padding-left: 20px; padding-right: 20px font-weight: 600;">Reports</a></li>
 
 						</ul>

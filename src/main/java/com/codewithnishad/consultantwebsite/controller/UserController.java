@@ -163,8 +163,7 @@ public class UserController extends HttpServlet {
 					response.addCookie(userCookiePhoneNumber);
 					
 					request.setAttribute("user", user);
-					RequestDispatcher rd = request.getRequestDispatcher("jobSeeker-home-page.jsp");
-					rd.forward(request, response);
+					response.sendRedirect("getuser?actionType=consultants");
 
 					return;
 
@@ -317,8 +316,6 @@ public class UserController extends HttpServlet {
 
 			if (!(consultantList.size() > 0)) {
 				message = "No Users Found!";
-
-				System.out.print(message);
 			}
 
 		} catch (ClassNotFoundException e) {
@@ -326,8 +323,6 @@ public class UserController extends HttpServlet {
 		} catch (SQLException e) {
 			message = e.getMessage();
 		}
-
-		System.out.print(message);
 
 		request.setAttribute("consultantList", consultantList);
 		request.setAttribute("feedbackMessage", message);
