@@ -35,11 +35,13 @@
 				<div class="container-fluid">
 					<div class="collapse navbar-collapse" id="navbarNav"
 						style="display: flex; justify-content: space-between">
+						<input type="hidden" name= "actionType" value="fetchAppointmentsForJobSeeker">
+						<input type="hidden" name= "jobSeekerId" value="${cookie.userId.value}">
 						<ul class="navbar-nav">
 							<li class="nav-item"><a class="nav-link active" href="#"
 								style="background-color: white; font-weight: 600; border-radius: 50px; padding-left: 20px; padding-right: 20px">Consultants
 									Available</a></li>
-							<li class="nav-item"><a class="nav-link" href="#"
+							<li class="nav-item"><a class="nav-link" href="jobSeeker-appointments-page.jsp"
 								style="padding-left: 20px; font-weight: 600; padding-right: 20px">Appointments</a></li>
 
 						</ul>

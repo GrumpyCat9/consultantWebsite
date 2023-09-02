@@ -33,7 +33,7 @@ public class AppointmentController extends HttpServlet {
 
 		if (actionType.equals("allAppointments")) {
 			getAllAppointments(request, response);
-		}
+		} 
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -47,7 +47,7 @@ public class AppointmentController extends HttpServlet {
 			deleteAppointment(request, response);
 		} else if (actionType.equals("getForConsultants")) {
 			getAppointmentsForConsultants(request, response);
-		} else if (actionType.equals("getForJobSeeker")) {
+		}else if (actionType.equals("fetchAppointmentsForJobSeeker")) {
 			getAppointmentsForJobSeeker(request, response);
 		}
 	}
@@ -101,7 +101,29 @@ public class AppointmentController extends HttpServlet {
 	}
 
 	private void getAppointmentsForJobSeeker(HttpServletRequest request, HttpServletResponse response) {
+		try {
 
+			int jobSeekerId = Integer.parseInt(request.getParameter("jobSeekerId"));
+
+			List<Appointment> appointmentList = getAppointmentService().fetchAppointmentsForJobSeeker(jobSeekerId);
+
+			if (!(appointmentList.size() > 0)) {
+				message = "No Appointments Found for Job Seeker";
+			}
+
+			request.setAttribute("appointmentList", appointmentList);
+			request.setAttribute("feedbackMessage", message);
+
+			System.out.print(message);
+
+			RequestDispatcher rd = request.getRequestDispatcher("jobSeeker-appointments-page.jsp");
+			rd.forward(request, response);
+
+		} catch (NumberFormatException e) {
+			message = "Invalid jobSeekerId provided.";
+		} catch (Exception e) {
+			message = "An error occurred: " + e.getMessage();
+		}
 	}
 
 	private void getAllAppointments(HttpServletRequest request, HttpServletResponse response)
