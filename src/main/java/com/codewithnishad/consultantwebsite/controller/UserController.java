@@ -277,6 +277,8 @@ public class UserController extends HttpServlet {
 
 	private void fetchAllUsers(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+		clearMessage();
 
 		List<User> userList = new ArrayList<User>();
 
@@ -309,6 +311,9 @@ public class UserController extends HttpServlet {
 
 	private void fetchAllConsultants(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+		clearMessage();
+		
 		List<User> consultantList = new ArrayList<User>();
 
 		try {
@@ -333,7 +338,7 @@ public class UserController extends HttpServlet {
 		clearMessage();
 	}
 
-	private void clearMessage() {
+	public void clearMessage() {
 		message = "";
 	}
 

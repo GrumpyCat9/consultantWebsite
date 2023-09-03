@@ -27,14 +27,14 @@
 		if (feedbackMessage === "User not Found") {
 			Swal.fire({
 				icon : 'error',
-				title : 'User not Found',
+				title : 'User or password incorrect',
 				text : 'Wrong Email or Password',
 			});
 		} else if (feedbackMessage.startsWith("Error")) {
 			Swal.fire({
 				icon : 'error',
-				title : 'Registration Error',
-				text : 'An error occurred during registration.',
+				title : 'Login Failed',
+				text : 'An error occurred during login.',
 			});
 		}
 	});
@@ -60,7 +60,7 @@
 						placeholder="Password" required>
 				</div>
 				<input type="hidden" name="actionType" value="login" />
-				<button type="submit" class="btn btn-primary" style="margin-top: 15px; margin-bottom: 15px; background-color: #e27a39; border: none">Submit</button>
+				<button type="submit" class="btn btn-primary" style="margin-top: 15px; margin-bottom: 15px; background-color: #e27a39; border: none">Sign in</button>
 				<div style="display:flex; justify-content: center; ">
 					<a href="user-registration.jsp" style="color: black">Don't have an account? Register here.</a>
 				</div>

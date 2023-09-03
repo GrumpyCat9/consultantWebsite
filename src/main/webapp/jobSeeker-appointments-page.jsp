@@ -95,7 +95,102 @@
 
 			</div>
 		</div>
-		<div></div>
+		<div class="modal fade" id="popup" tabindex="-1" role="dialog"
+		aria-labelledby="userModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document"
+			style="width: 100%; display: flex; justify-content: center; align-items: center">
+			<div class="modal-content" style="width: fit-content;">
+				<div class="modal-header">
+					<h5 class="modal-title" id="userModalLabel">User Details</h5>
+					<button type="button" data-ds-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form action="usermanager" method="post">
+						<div
+							style="display: flex; justify-content: space-Between; background-color: white; width: 900px; padding: 25px; box-shadow: 5px 5px 5px #0313D; border-radius: 12px">
+							<div style="width: 400px;">
+								<div class="form-group">
+									<label for="exampleInputEmail1">User ID</label> <input
+										type="text" class="form-control" id="userId" name="userId"
+										placeholder="User ID" value="${cookie.userId.value}" required
+										readonly>
+								</div>
+								<div class="form-group" style="padding-top: 15px">
+									<label for="exampleInputEmail1">First Name</label> <input
+										type="text" class="form-control" id="firstName"
+										name="firstName" placeholder="First Name"
+										value="${cookie.userFirstName.value}" required>
+								</div>
+								<div class="form-group" style="padding-top: 15px">
+									<label for="exampleInputPassword1">Last Name</label> <input
+										type="text" class="form-control" id="lastName" name="lastName"
+										placeholder="Last Name" required
+										value="${cookie.userLastName.value}">
+								</div>
+								<div class="form-group" style="padding-top: 15px">
+									<label for="exampleInputEmail1">Age</label> <input
+										type="number" class="form-control" id="age" name="age"
+										placeholder="Age" required value="${cookie.userAge.value}">
+								</div>
+								<div class="form-group" style="padding-top: 15px">
+									<label for="exampleInputPassword1">Gender</label> <select
+										class="form-select" id="gender" name="gender"
+										aria-label="Default select example" required>
+										<option disabled selected value="">Gender</option>
+										<option value="Male">Male</option>
+										<option value="Female">Female</option>
+										<option value="NotMentioned">Prefer not to say</option>
+									</select>
+								</div>
+							</div>
+							<div style="width: 400px;">
+								<div class="form-group">
+									<label for="exampleInputEmail1">Email</label> <input
+										type="email" class="form-control" id="email" name="email"
+										placeholder="Email" required value="${cookie.userEmail.value}">
+								</div>
+								<div class="form-group" style="padding-top: 15px">
+									<label for="exampleInputPassword1">Phone Number</label> <input
+										type="number" class="form-control" id="phoneNumber"
+										name="phoneNumber" placeholder="Phone Number" required
+										value="${cookie.userPhoneNumber.value}">
+								</div>
+								<div class="form-group" style="padding-top: 15px">
+									<label for="exampleInputEmail1">Role</label> <select
+										class="form-select" name="role"
+										aria-label="Default select example" required>
+										<option readonly selected value="${cookie.userRole.value}">${user.role}
+										</option>
+									</select>
+
+								</div>
+								<div class="form-group"
+									style="padding-top: 15px; padding-bottom: 15px">
+									<label for="exampleInputPassword1">Password</label> <input
+										type="password" class="form-control" id="password"
+										name="password" placeholder="Password" required>
+								</div>
+							</div>
+						</div>
+
+						<div
+							style="display: flex; justify-content: center; padding-top: 10px;">
+							<input type="hidden" name="actiontype" value="updateSingleUser" />
+							<button type="submit" class="btn btn-primary"
+								style="width: 100%; background-color: #e27a39; border: none;">Update</button>
+						</div>
+
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	</div>
 </body>
 </html>
