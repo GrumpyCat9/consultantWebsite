@@ -50,7 +50,49 @@
 					</div>
 				</div>
 			</nav></div>
-		<div></div>
+		<div style="margin-left: 100px; margin-right: 100px; margin-top: 50px">
+		
+		<div
+					style="display: flex; justify-content: space-between; text-align: center; align-items: center; margin-bottom: 20px">
+					<h3>Appointments</h3>
+
+					<form action="appointmentmanager" method="post">
+						<input type="hidden" name="actionType"
+							value="fetchAppointmentsForJobSeeker"> <input
+							type="hidden" name="jobSeekerId" value="${cookie.userId.value}">
+						<button type="submit" style=" border-radius:25px; padding-right: 25px; border: none; background-color:#e27a39 ; padding-left: 25px; padding-top: 5px; padding-bottom: 5px">Show all</button>
+					</form>
+
+				</div>
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">Appointment ID</th>
+							<th scope="col">Start Time</th>
+							<th scope="col">End Time</th>
+							<th scope="col">Duration</th>
+							<th scope="col">Appointment Date</th>
+							<th scope="col">Job Seeker ID</th>
+							<th scope="col">Consultant ID</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tag:forEach var="appointment" items="${appointmentList}">
+							<tr>
+								<td>${appointment.appointmentId}</td>
+								<td>${appointment.startTime}</td>
+								<td>${appointment.endTime}</td>
+								<td>${appointment.duration}</td>
+								<td>${appointment.appointmentDate}</td>
+								<td>${appointment.jobSeekerId}</td>
+								<td>${appointment.consultantId}</td>
+							</tr>
+						</tag:forEach>
+					</tbody>
+				</table>
+
+			</div>
+		</div>
 	</div>
 
 </body>
