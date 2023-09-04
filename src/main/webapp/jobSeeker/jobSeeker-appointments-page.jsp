@@ -2,6 +2,10 @@
 	pageEncoding="ISO-8859-1" isELIgnored="false"%>
 
 <%@ taglib prefix="tag" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<tag:if test="${cookie.userRole.value ne 'JobSeeker'}">
+	<tag:redirect url="user-login.jsp" />
+</tag:if>
 <!DOCTYPE html>
 <html>
 <head>
