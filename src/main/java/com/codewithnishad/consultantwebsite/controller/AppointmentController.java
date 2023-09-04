@@ -33,7 +33,7 @@ public class AppointmentController extends HttpServlet {
 
 		if (actionType.equals("allAppointments")) {
 			getAllAppointments(request, response);
-		} 
+		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -45,9 +45,9 @@ public class AppointmentController extends HttpServlet {
 			addAppointment(request, response);
 		} else if (actionType.equals("deleteAppointment")) {
 			deleteAppointment(request, response);
-		} else if (actionType.equals("getForConsultants")) {
+		} else if (actionType.equals("fetchAppointmentsForConsultants")) {
 			getAppointmentsForConsultants(request, response);
-		}else if (actionType.equals("fetchAppointmentsForJobSeeker")) {
+		} else if (actionType.equals("fetchAppointmentsForJobSeeker")) {
 			getAppointmentsForJobSeeker(request, response);
 		}
 	}
@@ -97,7 +97,28 @@ public class AppointmentController extends HttpServlet {
 	}
 
 	private void getAppointmentsForConsultants(HttpServletRequest request, HttpServletResponse response) {
+		try {
 
+			int jobConsultantId = Integer.parseInt(request.getParameter("jobConsultantId"));
+
+			List<Appointment> appointmentList = getAppointmentService().fetchAppointmentsforConsultants(jobConsultantId);
+
+			if (!(appointmentList.size() > 0)) {
+				message = "No Appointments Found";
+			}
+
+			request.setAttribute("appointmentList", appointmentList);
+			request.setAttribute("feedbackMessage", message);
+
+
+			RequestDispatcher rd = request.getRequestDispatcher("jobConsultant-home-page.jsp");
+			rd.forward(request, response);
+
+		} catch (NumberFormatException e) {
+			message = "Invalid jobConsultantId provided.";
+		} catch (Exception e) {
+			message = "An error occurred: " + e.getMessage();
+		}
 	}
 
 	private void getAppointmentsForJobSeeker(HttpServletRequest request, HttpServletResponse response) {
@@ -113,8 +134,6 @@ public class AppointmentController extends HttpServlet {
 
 			request.setAttribute("appointmentList", appointmentList);
 			request.setAttribute("feedbackMessage", message);
-
-			System.out.print(message);
 
 			RequestDispatcher rd = request.getRequestDispatcher("jobSeeker-appointments-page.jsp");
 			rd.forward(request, response);
