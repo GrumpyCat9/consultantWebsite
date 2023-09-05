@@ -25,6 +25,25 @@
 <script src="sweetalert2.min.js"></script>
 <link rel="stylesheet" href="sweetalert2.min.css">
 
+<script>
+	document.addEventListener("DOMContentLoaded", function() {
+		var feedbackMessage = "${feedbackMessage}";
+		if (feedbackMessage === "No Appointments Scheduled") {
+			Swal.fire({
+				icon : 'error',
+				title : 'No appointments',
+				text : 'No appointments scheduled or completed',
+			});
+		} else if (feedbackMessage.startsWith("Error")) {
+			Swal.fire({
+				icon : 'error',
+				title : 'Appointments',
+				text : 'An error occurred retriving appointment List',
+			});
+		}
+	});
+</script>
+
 </head>
 <body>
 	<div>

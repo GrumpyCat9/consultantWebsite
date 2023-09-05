@@ -118,7 +118,7 @@ userController.clearMessage();
 							style="padding-top: 15px; padding-bottom: 15px">
 							<label for="exampleInputPassword1">Password</label> <input
 								type="password" class="form-control" id="password"
-								name="password" placeholder="Password" required>
+								name="password" placeholder="Password" minlength="6" required>
 						</div>
 					</div>
 				</div>
@@ -134,8 +134,6 @@ userController.clearMessage();
 					<a href="user-login.jsp" style="color: black">Already have an
 						account? Login here.</a>
 				</div>
-
-
 			</form>
 		</div>
 

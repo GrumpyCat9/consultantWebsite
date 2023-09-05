@@ -104,7 +104,7 @@ public class AppointmentController extends HttpServlet {
 			List<Appointment> appointmentList = getAppointmentService().fetchAppointmentsforConsultants(jobConsultantId);
 
 			if (!(appointmentList.size() > 0)) {
-				message = "No Appointments Found";
+				message = "No Appointments Scheduled";
 			}
 
 			request.setAttribute("appointmentList", appointmentList);
@@ -115,9 +115,9 @@ public class AppointmentController extends HttpServlet {
 			rd.forward(request, response);
 
 		} catch (NumberFormatException e) {
-			message = "Invalid jobConsultantId provided.";
+			message = e.getMessage();
 		} catch (Exception e) {
-			message = "An error occurred: " + e.getMessage();
+			message = e.getMessage();
 		}
 	}
 
@@ -129,7 +129,7 @@ public class AppointmentController extends HttpServlet {
 			List<Appointment> appointmentList = getAppointmentService().fetchAppointmentsForJobSeeker(jobSeekerId);
 
 			if (!(appointmentList.size() > 0)) {
-				message = "No Appointments Found for Job Seeker";
+				message = "No Appointments Scheduled";
 			}
 
 			request.setAttribute("appointmentList", appointmentList);
@@ -139,9 +139,9 @@ public class AppointmentController extends HttpServlet {
 			rd.forward(request, response);
 
 		} catch (NumberFormatException e) {
-			message = "Invalid jobSeekerId provided.";
+			message = e.getMessage();
 		} catch (Exception e) {
-			message = "An error occurred: " + e.getMessage();
+			message = e.getMessage();
 		}
 	}
 
